@@ -27,8 +27,20 @@
           cargoLock = {
             lockFile = ./Cargo.lock;
           };
+
           nativeBuildInputs = inputs;
 
+          buildPhase = ''
+            cargo build --release --target=wasm32-unknown-unknown
+            mkdir -p $out/src
+            # cp ./package.json $out/;
+            wasm-bindgen \
+              --target nodejs \
+              --out-dir $out/src \
+              target/wasm32-unknown-unknown/release/nixwasm.wasm
+          '';
+
+          installPhase = "echo 'Skipping installPhase'";
         };
 
         devShell = pkgs.mkShell {packages = inputs;};        
