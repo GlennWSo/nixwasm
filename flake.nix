@@ -23,6 +23,7 @@
           devtools = [
             pkgs.nil
             pkgs.vscode-fhs
+            pkgs.nodePackages.typescript-language-server
           ];
       in
       {
