@@ -1,14 +1,20 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+/// Computes the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+/// of two integers using Euclid's algorithm.
+///
+/// ```
+/// use nixwasm::gcd;
+/// assert_eq!(gcd(3, 3), 3);
+/// assert_eq!(gcd(4, 2), 2);
+/// assert_eq!(gcd(20, 15), 5);
+/// assert_eq!(gcd(-20, 15), 5);
+/// assert_eq!(gcd(-20, -15), 5);
+/// assert_eq!(gcd(105, 252), 21);
+/// assert_eq!(gcd(-48, 18), 6);
+/// ```
+pub fn gcd(a: i64, b: i64) -> u64 {
+    if b == 0 {
+        a.unsigned_abs()
+    } else {
+        gcd(b, a % b)
     }
 }
