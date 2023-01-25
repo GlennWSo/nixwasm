@@ -14,9 +14,16 @@
     flake-utils.lib.eachDefaultSystem (system:
       let 
           overlays = [(import rust-overlay)];
-          pkgs = import nixpkgs { inherit overlays system; }; 
+          pkgs = import nixpkgs {
+            inherit overlays system;
+            config.allowUnfree= true; 
+          }; 
           rust = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
           inputs = [ rust pkgs.wasm-bindgen-cli ];
+          devtools = [
+            pkgs.nil
+            pkgs.vscode-fhs
+          ];
       in
       {
         defaultPackage = pkgs.rustPlatform.buildRustPackage {
@@ -43,7 +50,7 @@
           installPhase = "echo 'Skipping installPhase'";
         };
 
-        devShell = pkgs.mkShell {packages = inputs;};        
+        devShell = pkgs.mkShell {packages = inputs ++ devtools;};        
       }
     );
 }
