@@ -18,7 +18,12 @@
           cargoLock = {
             lockFile = ./Cargo.lock;
           };
+
         };
+
+        devShell = pkgs.mkShell {
+          packages = [ pkgs.wasm-bindgen-cli ];
+        };        
       }
     );
 }
