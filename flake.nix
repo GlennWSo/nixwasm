@@ -1,4 +1,5 @@
 {
+
   description = "Minimal rust wasm32-unknown-unknown example";
 
   inputs = {
@@ -19,7 +20,12 @@
             config.allowUnfree= true; 
           }; 
           rust = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
-          inputs = [ rust pkgs.wasm-bindgen-cli ];
+          inputs = [ 
+            rust
+            pkgs.wasm-pack
+            pkgs.wasm-bindgen-cli
+            pkgs.binaryen
+            ];
           devtools = [
             pkgs.nil
             pkgs.vscode-fhs
